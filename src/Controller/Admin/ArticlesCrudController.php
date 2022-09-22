@@ -25,6 +25,8 @@ class ArticlesCrudController extends AbstractCrudController
 
         yield TextEditorField::new('content');
 
+        yield TextField::new('featuredText');
+
         yield DateTimeField::new('createdAt')->hideOnForm();
     }
     
