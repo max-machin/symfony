@@ -22,6 +22,9 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $filename = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $media_name = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Media
     public function setFilename(string $filename): self
     {
         $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getMediaName(): ?string
+    {
+        return $this->media_name;
+    }
+
+    public function setMediaName(string $media_name): self
+    {
+        $this->media_name = $media_name;
 
         return $this;
     }

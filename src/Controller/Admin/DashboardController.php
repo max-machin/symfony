@@ -4,7 +4,9 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\Articles;
+use App\Entity\User;
 use App\Entity\Comments;
+use App\Entity\Media;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,6 +44,15 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Articles::class)->setAction(Crud::PAGE_NEW)
         ]);
 
+        yield MenuItem::subMenu('Media', 'fas fa-photo-video')->setSubItems([
+            MenuItem::linkToCrud('Mediathèques', 'fas fa-photo-video', Media::class),
+            MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Media::class)->setAction(Crud::PAGE_NEW)
+        ]);
+        
         yield MenuItem::linkToCrud('Commentaires', 'fas fa-comment', Comments::class);
+
+        yield MenuItem::subMenu('Utilisateurs', 'fas fa-user')->setSubItems([
+            MenuItem::linkToCrud('Tous les comptes', 'fas fa-user-friends', User::class)
+        ]);
     }
 }

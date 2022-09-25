@@ -15,47 +15,88 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        <nav class="py-1 border-bottom" style="background: #2f6690">
-            <div class="container-sm d-flex flex-wrap">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <nav class="py-1 border-bottom" style="background: #2f6690">
+                <div class="container d-flex flex-wrap w-75">
 
-                <div class="dropdown">
-                    <a class="text-white nav nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Mon blog
+                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" href={{path('app_home')}}>
+                        <span class="fs-4">
+                            TechMania
+                        </span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdminDashboard">
-                      <a class="dropdown-item" href={{path('admin')}}>Tableau de bord</a>
-                      <a class="dropdown-item" href="#">Menus</a>
-                    </div>
-                </div>
 
-                <div class="dropdown">
-                    <a class="text-white nav nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Ajouter
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdminAdd">
-                      <a class="dropdown-item" href="#">Article</a>
-                      <a class="dropdown-item" href="#">Page</a>
+                    <div class="dropdown">
+                        <a class="text-white nav nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Administration
+                        </a>
+                        
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdminDashboard">
+                            <a class="dropdown-item" href={{path('admin')}}>Tableau de bord</a>
+                            <a class="dropdown-item text-dark" href={{path('app_logout')}}>Se déconnecter</a>
+                        </div>
+                        
                     </div>
-                </div>
-            </div>    
-        </nav>
+                </div>    
+            </nav>
+            {% elseif not is_granted('ROLE_ADMIN') %}
+            <nav class="py-1 border-bottom" style="background: #2f6690">
+                <div class="container d-flex flex-wrap w-80">
+
+                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" href={{path('app_home')}}>
+                        <span class="fs-4">
+                            TechMania
+                        </span>
+                    </a>
+
+                    <div class="dropdown">
+                        <a class="text-white nav nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ app.user.username|capitalize }}
+                        </a>
+                        
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdminDashboard">
+                            <li class="">
+                                <a class="dropdown-item text-dark" href={{path('app_profil', {username: app.user.username})}}>Mon profil</a>
+                            </li>
+                            <li class="">
+                                <a class="dropdown-item text-dark" href={{path('app_logout')}}>Se déconnecter</a>
+                            </li>
+                        </div>
+                    </div>
+                </div>    
+            </nav>
+            {% endif %}
+        {% endif %}
 
         <div class="container">
-            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" href={{path('app_home')}}>
-                    <span class="fs-4">
-                        TechMania
-                    </span>
-                </a>
+            <header class="d-flex flex-wrap justify-content-center py-2 mb-4 border-bottom">
+                
                 <ul class="nav nav-pills">
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+
                     <li class="nav-item">
-                      <a class="nav-link text-dark" href="#">Se connecter</a>
+                        <a class="nav-link text-dark" href={{path('app_articles')}}>Nos articles</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" href="#">S'inscrire</a>
+                      <a class="nav-link text-dark" href={{path('app_register')}}>S'inscrire</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href={{ path('app_login')}}>Se connecter</a>
+                    </li>
+
+                    {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href={{path('app_articles')}}>Nos articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href={{path('app_home')}}><i class="fa-solid fa-plus pl-1 fa-xs"></i> Créer un article</a>
+                    </li>
+                    
+                    {% endif %}
                 </ul>
             </header>
         </div>
