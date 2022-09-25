@@ -5,8 +5,8 @@
 
         <div class="col-md-5">
             {% if article.featuredImage %}
-                <a href="{{path('article_show', {'slug': article.slug}) }}">
-                    <img src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy" width="350" height="205" />
+                <a href="{{path('article_show', {'slug': article.slug}) }}" style="height: 300px;">
+                    <img style="max-height: 250px; width: 100%; object-fit:cover" src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy" />
                 </a>
             {% endif %}            
         </div>

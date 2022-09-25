@@ -18,16 +18,18 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% if is_granted('ROLE_ADMIN') %}
-            <nav class="py-1 border-bottom" style="background: #2f6690">
-                <div class="container d-flex flex-wrap w-75">
+        <nav class="py-1 border-bottom" style="background: #2f6690">
+            <div class="container d-flex flex-wrap">
 
-                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" href={{path('app_home')}}>
-                        <span class="fs-4">
-                            TechMania
-                        </span>
-                    </a>
+                <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" href={{path('app_home')}}>
+                    <span class="fs-4">
+                        TechMania
+                    </span>
+                </a>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('ROLE_ADMIN') %}
+            
 
                     <div class="dropdown">
                         <a class="text-white nav nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,18 +42,9 @@
                         </div>
                         
                     </div>
-                </div>    
-            </nav>
-            {% elseif not is_granted('ROLE_ADMIN') %}
-            <nav class="py-1 border-bottom" style="background: #2f6690">
-                <div class="container d-flex flex-wrap w-80">
-
-                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" href={{path('app_home')}}>
-                        <span class="fs-4">
-                            TechMania
-                        </span>
-                    </a>
-
+               
+                {% elseif not is_granted('ROLE_ADMIN') %}
+          
                     <div class="dropdown">
                         <a class="text-white nav nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ app.user.username|capitalize }}
@@ -66,34 +59,36 @@
                             </li>
                         </div>
                     </div>
-                </div>    
-            </nav>
+                
             {% endif %}
         {% endif %}
 
-        <div class="container">
-            <header class="d-flex flex-wrap justify-content-center py-2 mb-4 border-bottom">
-                
-                <ul class="nav nav-pills">
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            </div>    
+        </nav>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href={{path('app_articles')}}>Nos articles</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark" href={{path('app_register')}}>S'inscrire</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href={{ path('app_login')}}>Se connecter</a>
-                    </li>
+        <div class="container">
+            <header class="d-flex flex-wrap py-2 mb-4 border-bottom">
+                
+                <ul class="container nav nav-pills d-flex justify-content-between">
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href={{path('app_articles')}}>Nos articles</a>
+                        </li>
+                    </div>
+                    <div class="d-flex">
+                        <li class="nav-item">
+                        <a class="nav-link text-dark" href={{path('app_register')}}>S'inscrire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href={{ path('app_login')}}>Se connecter</a>
+                        </li>
+                    </div>
 
                     {% else %}
 
-                    <li class="nav-item">
+                    <li class="nav-item text-align-center">
                         <a class="nav-link text-dark" href={{path('app_articles')}}>Nos articles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href={{path('app_home')}}><i class="fa-solid fa-plus pl-1 fa-xs"></i> Créer un article</a>
                     </li>
                     
                     {% endif %}

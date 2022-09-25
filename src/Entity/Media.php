@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
@@ -21,9 +23,12 @@ class Media
 
     #[ORM\Column(length: 255)]
     private ?string $filename = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $media_name = null;
+  
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+        $this->Article = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,15 +71,9 @@ class Media
         return $this;
     }
 
-    public function getMediaName(): ?string
+    public function __toString()
     {
-        return $this->media_name;
+        return $this->name;
     }
 
-    public function setMediaName(string $media_name): self
-    {
-        $this->media_name = $media_name;
-
-        return $this;
-    }
 }

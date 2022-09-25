@@ -91,16 +91,35 @@ class UserController extends AbstractController
             
         }
 
+        
+
         $passwordForm = $this->createForm(UserPasswordType::class);
 
         $passwordForm->handleRequest($request);
-        if($passwordForm->isSubmitted() && $form->isValid()){
-            $user = $passwordForm->getData();
+
+        if($passwordForm->isSubmitted() && $passwordForm->isValid()){
+            // if($hasher->isPasswordValid($user, $passwordForm->getdata()['plainPassword']))
+            // {
+            //     $user->setPassword(
+                    
+            //     );
+                
+            // }
+
+            $user->setPassword(
+                $hasher->hashPassword(
+                    $user,
+                    $passwordForm->get('Newpassword')->getData()
+                )
+            );
+
             $manager->persist($user);
             $manager->flush();
 
+
+
             $this->addFlash(
-                'success',
+                'success2',
                 'Le mot de passe a été modifé.'
             );
         }

@@ -29,14 +29,14 @@ class Articles implements TimestampedInterface
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comments::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\ManyToOne]
-    private ?Media $featuredImage = null;
-
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
     private ?string $featuredText;
+
+    #[ORM\ManyToOne]
+    private ?Media $featuredImage = null;
 
     public function __construct()
     {
@@ -114,17 +114,6 @@ class Articles implements TimestampedInterface
         return $this;
     }
 
-    public function getFeaturedImage(): ?Media
-    {
-        return $this->featuredImage;
-    }
-
-    public function setFeaturedImage(?Media $featuredImage): self
-    {
-        $this->featuredImage = $featuredImage;
-
-        return $this;
-    }
 
     public function getSlug(): ?string
     {
@@ -154,4 +143,19 @@ class Articles implements TimestampedInterface
     {
         return $this->getTitle();
     }
+
+    public function getFeaturedImage(): ?Media
+    {
+        return $this->featuredImage;
+    }
+
+    public function setFeaturedImage(?Media $featuredImage): self
+    {
+        $this->featuredImage = $featuredImage;
+
+        return $this;
+    }
+
+    
+ 
 }
