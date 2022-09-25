@@ -1,4 +1,4 @@
-{% for article in articles %}
+{% for article in articles|slice(0,7) %}
     {% include 'article/item.html.twig' with { article } %}
 {% endfor %}
 

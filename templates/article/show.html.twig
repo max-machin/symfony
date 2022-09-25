@@ -1,13 +1,34 @@
+{% set article_show =  path('article_show', {'slug': article.slug})  %}
+
 {% extends 'base.html.twig' %}
 
+
+
+
 {% block body %}
+    {% apply inline_css %}
+    <style>
+        .article-relatif {
+            transition: .3s ease-out;
+        }
+        .article-relatif:hover {
+            transform: scale(1.02);
+            transition: .3s ease-out;
+        }
+
+        .article-content img {
+            display: none;
+        }
+    </style>
     <div class="container">
         <h1>{{ article.title }}</h1>
 
         <hr>
-
-        {{ article.content|raw}}
-
+      
+        <div class="article-content" style="text-align: left; margin: auto; margin-top: 64px; width: 80%;" >
+            {{ article.content|raw}}
+        </div>
+           
         <h2 class="comment-title mt-5">
            
             <span class="comment-count"> {{ article.comments|length }} </span> commentaire(s)
@@ -29,5 +50,27 @@
                 {% include 'comments/show.html.twig' with [comment] %}
             {% endfor %}
         </div>
+
+        <h3 class="fst-italic mb-3">Articles relatifs</h3>
+        <div class="d-flex">
+
+            {% for article in articles|slice(0,4) %}
+
+            {% set article_show =  path('article_show', {'slug': article.slug})  %}
+
+            <div class="article-relatif" style="margin:auto; width: 23%;">
+                <a href="{{path('article_show', {'slug': article.slug}) }}">
+                    <img style="max-height: 150px; width: 100%; object-fit:cover" src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy" />
+                </a>
+                <p class="mt-1 fw-bold">
+                    <a class="text-decoration-none text-black" href="{{ article_show }}">{{ article.title }}</a>
+                </p>
+            </div>
+            
+            {% endfor %}
+
+        </div>
     </div>
+    {% endapply %}
 {% endblock %}
+
