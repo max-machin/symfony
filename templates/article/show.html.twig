@@ -19,6 +19,15 @@
         .article-content img {
             display: none;
         }
+
+        .comment-area .btn {
+            background-color: #84ebad;
+            border: #84ebad;
+            color: black;
+            border-radius: 2px;
+            font-size: 15px;
+            padding: 8px 24px;
+        }
     </style>
     <div class="container">
         <h1>{{ article.title }}</h1>
@@ -39,7 +48,7 @@
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-        <div class="comment-area mb-5">
+        <div class="comment-area mb-5" style="width: 40%;">
             {{ form(commentForm, { 'attr': { 'class': 'comment-form' } }) }}
         </div>
 

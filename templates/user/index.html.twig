@@ -3,7 +3,16 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-
+    {% apply inline_css %}
+    <style>
+        .btn {
+            background-color: #84ebad;
+            border: #84ebad;
+            color: black;
+            padding: 8px 24px;
+            border-radius: 2px;
+        }
+    </style>
     <div class="container">
         <div class="row">
 
@@ -69,5 +78,5 @@
 
         </div>
     </div>
-
+    {% endapply %}
 {% endblock %}

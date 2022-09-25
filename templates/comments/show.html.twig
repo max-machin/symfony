@@ -8,13 +8,12 @@
                 <a href="" class="text-decoration-none">
                     <span class="comment-author">{{username}}</span>
                 </a> 
-                {{ comment.createdAt|date('d M Y à H:i:s') }}
             </h5>
 
-            <p class="card-text">
+            <p class="card-text mt-2 mb-2" style="font-size: 16px;">
                 {{ comment.content }}
             </p>
-
+            <span style="font-size: 14px; color: gray;">{{ comment.createdAt|date('d M Y à H:i:s') }}</span>
         </div>
     </div>
 </div>
